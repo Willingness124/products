@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Upload</title>
+</head>
+<body>
+    <h2>Upload Product</h2>
+    <form id="productForm">
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required>
+
+        <label for="imageURL">Image URL:</label>
+        <input type="text" id="imageURL" name="imageURL" required>
+
+        <button type="button" onclick="submitForm()">Upload Product</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            var formData = {
+                name: document.getElementById("name").value,
+                description: document.getElementById("description").value,
+                price: parseFloat(document.getElementById("price").value),
+                imageURL: document.getElementById("imageURL").value,
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycbxEbjnSwzD9nB0Q-gs9LftQR14t3EgEYhAFX4jZF5rXi7CLE1JqHQowRnyyRNcs3Jg/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert('Product uploaded successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error uploading product. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
